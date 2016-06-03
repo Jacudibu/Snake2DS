@@ -19,10 +19,10 @@ function gfx:load()
   gfx.leftup = love.graphics.newImage("gfx/body-left-up.png")
   gfx.leftdown = love.graphics.newImage("gfx/body-up-right.png") -- fixme
   
-  gfx.headup = love.graphics.newImage("gfx/body-up.png")
-  gfx.headright = love.graphics.newImage("gfx/body-right.png")
-  gfx.headdown = love.graphics.newImage("gfx/body-down.png")
-  gfx.headleft = love.graphics.newImage("gfx/body-left.png")
+  gfx.headup = love.graphics.newImage("gfx/head-up.png")
+  gfx.headright = love.graphics.newImage("gfx/head-right.png")
+  gfx.headdown = love.graphics.newImage("gfx/head-down.png")
+  gfx.headleft = love.graphics.newImage("gfx/head-left.png")
 
 end
 

@@ -108,10 +108,10 @@ function gfx:drawToGridOnBothScreens(img, x, y)
   local screenX, screenY, onBottomScreen = gfx:calculateScreenPosition(x, y)
   
   if (onBottomScreen) then
-    --love.graphics.setScreen('bottom')
+    love.graphics.setScreen('bottom')
     screenY = screenY - 240
   else
-    --love.graphics.setScreen('top')
+    love.graphics.setScreen('top')
     screenX = screenX + 40
   end
   

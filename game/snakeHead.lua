@@ -18,16 +18,16 @@ end
 function head:update(dt)
   head.currentTimer = head.currentTimer - dt
   
-  if (love.keyboard.isDown('up')) then      
+  if (love.keyboard.isDown('up') and not (head.lastMoveY == 1)) then      
       head.moveNextX = 0
       head.moveNextY = -1
-    else if (love.keyboard.isDown('down')) then
+    else if (love.keyboard.isDown('down') and not (head.lastMoveY == -1)) then
       head.moveNextX = 0
       head.moveNextY = 1
-      else if (love.keyboard.isDown('left')) then
+      else if (love.keyboard.isDown('left') and not (head.lastMoveX == 1)) then
         head.moveNextX = -1
         head.moveNextY = 0
-        else if (love.keyboard.isDown('right')) then
+        else if (love.keyboard.isDown('right') and not (head.lastMoveX == -1)) then
           head.moveNextX = 1
           head.moveNextY = 0
         end

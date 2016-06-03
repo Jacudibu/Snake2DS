@@ -2,33 +2,44 @@ require('gfx')
 
 require('snakeHead')
 require('snakeBody')
+require('stats')
+
+
+
 
 function love.load()
   love.graphics.setBackgroundColor(200, 200, 200)
   
   gfx.load()
   
-  
-  head.init()
-  body.init()
+  init()
+end
+
+function init()
+  stats:init()
+  head:init()
+  body:init()
 end
 
 function love.update(dt)
-  head.update(dt, dt)
+  head:update(dt)
+  stats:update(dt)
 end
 
 function love.draw()
-  
-  --love.graphics.setScreen('top')
-  love.graphics.setColor(0, 0, 0)
-  love.graphics.print("Top-Screen  "..love.graphics.getWidth().."x"..love.graphics.getHeight(), 5, 5)
-
+  drawTopScreenBorder()
     
-  --love.graphics.setScreen('bottom')
-  love.graphics.print("Bottom-Screen  "..love.graphics.getWidth().."x"..love.graphics.getHeight(), 5, 5)
-  
-  head.draw()
-  body.draw()
+  head:draw()
+  body:draw()
+  stats:draw()
+end
+
+function drawTopScreenBorder()
+  love.graphics.setScreen('top')
+  love.graphics.setColor(0, 0, 0)
+
+  love.graphics.line(40, 0, 40, 240)
+  love.graphics.line(360, 0, 360, 240)
 end
 
 function love.keypressed(key)

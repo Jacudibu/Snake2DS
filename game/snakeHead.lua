@@ -5,14 +5,15 @@ head = {}
 
 
 function head:init()
-  head.x = 0
-  head.y = 0
+  head.x = 10
+  head.y = 7
   head.moveNextX = 0
   head.moveNextY = 0
   head.lastMoveX = -2
   head.lastMoveY = -2
   head.moveTimer = 0.1 
   head.currentTimer = 1.0
+  head.dead = false
 end
 
 function head:update(dt)
@@ -48,6 +49,8 @@ function head:update(dt)
     
     head.lastMoveX = head.moveNextX
     head.lastMoveY = head.moveNextY
+    
+    head:checkForCollsisions()
   end
 end
 
@@ -58,4 +61,12 @@ end
 
 function head:eat()
   body:increaseSize()
+end
+
+function head:checkForCollsisions()
+  for i, fragment in ipairs(body.fragments) do
+    if (head.x == fragment.x and head.y == fragment.y) then
+      head.dead = true
+    end
+  end
 end

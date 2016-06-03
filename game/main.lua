@@ -2,6 +2,7 @@ require('gfx')
 
 require('snakeHead')
 require('snakeBody')
+require('pickup')
 require('stats')
 
 
@@ -19,10 +20,14 @@ function init()
   stats:init()
   head:init()
   body:init()
+  pickup:init()
 end
 
 function love.update(dt)
+  checkForGameOver()
+  
   head:update(dt)
+  pickup:update(dt)
   stats:update(dt)
 end
 
@@ -31,8 +36,16 @@ function love.draw()
     
   head:draw()
   body:draw()
+  pickup:draw()
   stats:draw()
 end
+
+function checkForGameOver()
+  if head.dead then
+    init()
+  end
+end
+
 
 function drawTopScreenBorder()
   love.graphics.setScreen('top')

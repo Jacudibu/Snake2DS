@@ -1,5 +1,5 @@
-require('body')
-require('snake')
+require('snakeBody')
+require('snakeHead')
 
 
 function love.load()
@@ -10,12 +10,12 @@ function love.load()
   speed = 100;
   
   body.load()
-  snake.load()
+  head.load()
 end
 
 function love.update(dt)
   moveCoordinates(dt)
-  snake.update(dt, dt)
+  head.update(dt, dt)
 end
 
 function moveCoordinates(dt)
@@ -39,7 +39,9 @@ end
 function love.draw()
   love.graphics.setScreen('top')
   love.graphics.print("Top-Screen  "..love.graphics.getWidth().."x"..love.graphics.getHeight(), 5, 5)
-  love.graphics.print("100px", 100, 100) 
+  love.graphics.print("x", 100, 5)
+  love.graphics.print("y", 5, 100) 
+
     
   love.graphics.setScreen('bottom')
   love.graphics.print("Bottom-Screen  "..love.graphics.getWidth().."x"..love.graphics.getHeight(), 5, 5)
@@ -49,7 +51,7 @@ function love.draw()
   local to = {x = 1, y = 1}
   local imageToDraw = body.getBodyImage(from, to, from) -- this can't be right
   
-  snake.draw()
+  head.draw()
 end
 
 function love.keypressed(key)

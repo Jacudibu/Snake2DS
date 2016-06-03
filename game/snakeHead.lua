@@ -1,4 +1,5 @@
 require('gfx')
+require('snakeBody')
 
 head = {}
 
@@ -8,8 +9,8 @@ function head:init()
   head.y = 0
   head.moveNextX = 0
   head.moveNextY = 0
-  head.lastMoveX = 1
-  head.lastMoveY = 1
+  head.lastMoveX = -2
+  head.lastMoveY = -2
   head.moveTimer = 0.1 
   head.currentTimer = 1.0
 end
@@ -17,7 +18,7 @@ end
 function head:update(dt)
   head.currentTimer = head.currentTimer - dt
   
-  if (love.keyboard.isDown('up')) then
+  if (love.keyboard.isDown('up')) then      
       head.moveNextX = 0
       head.moveNextY = -1
     else if (love.keyboard.isDown('down')) then
@@ -35,6 +36,10 @@ function head:update(dt)
   end
   
   if (head.currentTimer < 0) then
+    body:tick({x = head.lastMoveX, y = head.lastMoveY},
+              {x = head.x, y = head.y},
+              {x = head.moveNextX, y = head.moveNextY})
+    
     head.x = head.x + head.moveNextX
     head.y = head.y + head.moveNextY
     head.x = head.x % 20
@@ -46,21 +51,11 @@ function head:update(dt)
   end
 end
 
-
 function head:draw()
-  local x, y, onBottomScreen = calculateScreenPosition(head.x, head.y)
-  
-  if (onBottomScreen) then
-  --  love.graphics.setScreen('bottom')
-    y = y - 240
-  else
-  --  love.graphics.setScreen('top')
-    x = x + 40
-  end
-  
-  love.graphics.draw(gfx:getHeadImage(head.lastMoveX, head.lastMoveY), x, y)
+  local img = gfx:getHeadImage(head.lastMoveX, head.lastMoveY)
+  gfx:drawToGridOnBothScreens(img, head.x, head.y)
 end
 
-function calculateScreenPosition(x, y)
-  return x * 16, y * 16, y >= 15
+function head:eat()
+  body:increaseSize()
 end

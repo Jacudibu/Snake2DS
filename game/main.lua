@@ -1,14 +1,16 @@
 require('gfx')
-require('snakeHead')
 
+require('snakeHead')
+require('snakeBody')
 
 function love.load()
-  love.graphics.setBackgroundColor(255, 255, 255)
+  love.graphics.setBackgroundColor(200, 200, 200)
+  
   gfx.load()
   
   
-  
   head.init()
+  body.init()
 end
 
 function love.update(dt)
@@ -16,8 +18,9 @@ function love.update(dt)
 end
 
 function love.draw()
-  love.graphics.setColor(0, 0, 0)
+  
   --love.graphics.setScreen('top')
+  love.graphics.setColor(0, 0, 0)
   love.graphics.print("Top-Screen  "..love.graphics.getWidth().."x"..love.graphics.getHeight(), 5, 5)
 
     
@@ -25,10 +28,15 @@ function love.draw()
   love.graphics.print("Bottom-Screen  "..love.graphics.getWidth().."x"..love.graphics.getHeight(), 5, 5)
   
   head.draw()
+  body.draw()
 end
 
 function love.keypressed(key)
-	if key == "select" then
+	if (key == "select") then
 		love.event.quit()
 	end
+  
+  if (key == "start" or key == "x") then
+    head:eat()
+  end
 end

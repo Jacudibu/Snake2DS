@@ -1,12 +1,15 @@
+require('gfx')
+
 head = {}
 
 
-function head:load()
-  head.img = love.graphics.newImage("gfx/body-up.png");
+function head:init()
   head.x = 0
   head.y = 0
   head.moveNextX = 0
   head.moveNextY = 0
+  head.lastMoveX = 1
+  head.lastMoveY = 1
   head.moveTimer = 0.1 
   head.currentTimer = 1.0
 end
@@ -37,6 +40,9 @@ function head:update(dt)
     head.x = head.x % 20
     head.y = head.y % 30
     head.currentTimer = head.moveTimer
+    
+    head.lastMoveX = head.moveNextX
+    head.lastMoveY = head.moveNextY
   end
 end
 
@@ -45,14 +51,14 @@ function head:draw()
   local x, y, onBottomScreen = calculateScreenPosition(head.x, head.y)
   
   if (onBottomScreen) then
-    love.graphics.setScreen('bottom')
+  --  love.graphics.setScreen('bottom')
     y = y - 240
   else
-    love.graphics.setScreen('top')
+  --  love.graphics.setScreen('top')
     x = x + 40
   end
   
-  love.graphics.draw(head.img, x, y)
+  love.graphics.draw(gfx:getHeadImage(head.lastMoveX, head.lastMoveY), x, y)
 end
 
 function calculateScreenPosition(x, y)

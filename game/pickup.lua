@@ -6,7 +6,7 @@ require('snakeBody')
 pickup = {}
 
 function pickup:init()
-  pickup.img = love.graphics.newImage("gfx/apple.png")
+  pickup.img = love.graphics.newImage("gfx/pickup-apple.png")
   pickup:spawn()
 end
 

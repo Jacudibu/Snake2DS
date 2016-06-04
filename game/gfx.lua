@@ -28,6 +28,9 @@ function gfx:load()
   gfx.headleftA = love.graphics.newImage("gfx/head-left-a.png")
   gfx.headleftB = love.graphics.newImage("gfx/head-left-b.png")
 
+  gfx.pickup = love.graphics.newImage("gfx/pickup-apple.png")
+  gfx.special = love.graphics.newImage("gfx/pickup-mouse.png")
+
 end
 
 function gfx:getBodyImage(lastMovement, nextMovement)

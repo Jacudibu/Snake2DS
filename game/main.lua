@@ -14,7 +14,6 @@ function love.load()
   love.graphics.setBackgroundColor(200, 200, 200)
   
   gfx.load()
-  pickup.load()
   
   init()
 end

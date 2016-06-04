@@ -25,11 +25,12 @@ function stats:draw()
   -- we have [0, 0] to [40, 240] as well as [360, 0] to [400, 240] left blank.
   
   love.graphics.setScreen('top')
-  love.graphics.print(stats.totalScore, 0, 0)
-  love.graphics.print(stats.totalLength, 0, 20)
+  love.graphics.print(stats.totalScore, 10, 200)
+  love.graphics.print(stats.totalLength, 10, 220)
   
   if (stats.specialTimer > 0) then
-    love.graphics.print(stats.specialTimer, 370, 0)
+    love.graphics.print(stats.specialTimer, 370, 200)
+    love.graphics.draw(gfx.special, 372, 215)
   end
 end
 

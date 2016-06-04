@@ -7,12 +7,6 @@ require('stats')
 pickup = {}
 pickup.special = {}
 
-function pickup:load()
-  pickup.img = love.graphics.newImage("gfx/pickup-apple.png")
-  pickup.special.img = love.graphics.newImage("gfx/pickup-mouse.png")
-end
-
-
 function pickup:init()
   pickup.totalSpawned = 0
   pickup.x = 0
@@ -26,10 +20,10 @@ function pickup:init()
 end
 
 function pickup:draw()
-  gfx:drawToGridOnBothScreens(pickup.img, pickup.x, pickup.y)
+  gfx:drawToGridOnBothScreens(gfx.pickup, pickup.x, pickup.y)
   
   if (pickup.special.timer > 0) then
-    gfx:drawToGridOnBothScreens(pickup.special.img, pickup.special.x, pickup.special.y)
+    gfx:drawToGridOnBothScreens(gfx.special, pickup.special.x, pickup.special.y)
   end
   
 end
@@ -49,7 +43,7 @@ function checkForGettingEaten()
     pickup:spawn()
   end
   
-  if (head.x == pickup.special.x and head.y == pickup.special.y) then
+  if (pickup.special.timer > 0 and head.x == pickup.special.x and head.y == pickup.special.y) then
     head:eat(true)
     stats:specialWasEaten()
     pickup:destroySpecial()

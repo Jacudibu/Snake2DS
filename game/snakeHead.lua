@@ -12,15 +12,12 @@ function head:init()
   head.lastMoveX = -2
   head.lastMoveY = -2
   head.moveTimer = 0.1 
-  head.currentTimer = 1.0
   head.tongueFlip = false
   
   head.dead = false
 end
 
 function head:update(dt)
-  head.currentTimer = head.currentTimer - dt
-  
   if (love.keyboard.isDown('up') and not (head.lastMoveY == 1)) then      
       head.moveNextX = 0
       head.moveNextY = -1
@@ -37,10 +34,6 @@ function head:update(dt)
       end
     end
   end
-  
-  if (head.currentTimer < 0) then
-    head:tick()
-  end
 end
 
 function head:draw()
@@ -49,9 +42,9 @@ function head:draw()
 end
 
 function head:tick()
-  body:tick({x = head.lastMoveX, y = head.lastMoveY},
-            {x = head.x, y = head.y},
-            {x = head.moveNextX, y = head.moveNextY})
+  body:handleTick({x = head.lastMoveX, y = head.lastMoveY},
+                  {x = head.x, y = head.y},
+                  {x = head.moveNextX, y = head.moveNextY})
     
   head.x = head.x + head.moveNextX
   head.y = head.y + head.moveNextY

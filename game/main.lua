@@ -6,12 +6,15 @@ require('pickup')
 require('stats')
 
 
-
+tickTimer = 0.1
+tickTimerResetValue = 0.1
 
 function love.load()
+
   love.graphics.setBackgroundColor(200, 200, 200)
   
   gfx.load()
+  pickup.load()
   
   init()
 end
@@ -21,14 +24,31 @@ function init()
   head:init()
   body:init()
   pickup:init()
+
 end
 
 function love.update(dt)
   checkForGameOver()
+  handleTicking(dt)
   
   head:update(dt)
   pickup:update(dt)
   stats:update(dt)
+end
+
+function handleTicking(dt)
+  tickTimer = tickTimer - dt
+  
+  if (tickTimer < 0) then
+    tick()
+    tickTimer = tickTimer + tickTimerResetValue
+  end
+end
+
+function tick()
+  head:tick()
+  pickup:tick()
+  stats:tick()
 end
 
 function love.draw()

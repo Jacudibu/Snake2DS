@@ -12,7 +12,7 @@ function body:increaseSize()
   body.length = body.length + 1
 end
 
-function body:tick(lastMovement, currentPosition, nextMovement)
+function body:handleTick(lastMovement, currentPosition, nextMovement)
   if (not (body.skipNext)) then
     body:removeOldest()
   end

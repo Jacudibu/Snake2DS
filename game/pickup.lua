@@ -2,43 +2,93 @@ require('random')
 require('gfx')
 require('snakeHead')
 require('snakeBody')
+require('stats')
 
 pickup = {}
+pickup.special = {}
+
+function pickup:load()
+  pickup.img = love.graphics.newImage("gfx/pickup-apple.png")
+  pickup.special.img = love.graphics.newImage("gfx/pickup-mouse.png")
+end
+
 
 function pickup:init()
-  pickup.img = love.graphics.newImage("gfx/pickup-apple.png")
+  pickup.totalSpawned = 0
+  pickup.x = 0
+  pickup.y = 0
+  
+  pickup.special.timer = 0
+  pickup.special.x = 0
+  pickup.special.y = 0
+
   pickup:spawn()
 end
 
 function pickup:draw()
   gfx:drawToGridOnBothScreens(pickup.img, pickup.x, pickup.y)
   
+  if (pickup.special.timer > 0) then
+    gfx:drawToGridOnBothScreens(pickup.special.img, pickup.special.x, pickup.special.y)
+  end
+  
 end
 
-function pickup:update()
+function pickup:update(dt)
+  checkForGettingEaten()
+end
+
+function pickup:tick()
+  pickup.special.timer = pickup.special.timer - 1
+end
+
+function checkForGettingEaten()
   if (head.x == pickup.x and head.y == pickup.y) then
+    stats:pickupWasEaten()
     head:eat()
     pickup:spawn()
+  end
+  
+  if (head.x == pickup.special.x and head.y == pickup.special.y) then
+    head:eat(true)
+    stats:specialWasEaten()
+    pickup:destroySpecial()
   end
 end
 
 function pickup:spawn()
-  pickup.x = math.floor(random:range(0, 15))
-  pickup.y = math.floor(random:range(0, 30))
+  pickup.totalSpawned = pickup.totalSpawned + 1
+  pickup.x, pickup.y = pickup:getValidSpawnPositions()
+
+  if (pickup.totalSpawned % 10 == 0) then
+    pickup.special.timer = 100
+    stats:setSpecialTimer(100)
+    pickup.special.x, pickup.special.y = pickup:getValidSpawnPositions()
+  end
+end
+
+function pickup:destroySpecial()
+  pickup.special.timer = 0
+end
+
+function pickup:getValidSpawnPositions()
+  x = math.floor(random:range(0, 15))
+  y = math.floor(random:range(0, 30))
   
   local timesTried = 0
-  while (not (pickup:isFieldEmpty(pickup.x, pickup.y))) do
-    pickup.x = (pickup.x + 1) % 15
+  while (not (pickup:isFieldEmpty(x, y))) do
+    x = (x + 1) % 15
     
     if (timesTried % 30 == 0) then
-      pickup.y = (pickup.y + 1) %  30
+      y = (y + 1) %  30
     end
     
     timesTried = timesTried + 1
   end
   
-  
+  return x, y
 end
+
 
 function pickup:isFieldEmpty(x, y)
   for i, fragment in ipairs(body.fragments) do
@@ -48,6 +98,10 @@ function pickup:isFieldEmpty(x, y)
   end
   
   if (head.x == x and head.y == y) then
+    return false
+  end
+  
+  if (pickup.x == x and pickup.y == y or pickup.special.x == x and pickup.special.y == y) then
     return false
   end
   

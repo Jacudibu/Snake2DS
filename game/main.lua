@@ -59,8 +59,4 @@ function love.keypressed(key)
 	if (key == "select") then
 		love.event.quit()
 	end
-  
-  if (key == "start" or key == "x") then
-    head:eat()
-  end
 end

@@ -19,10 +19,14 @@ function gfx:load()
   gfx.leftup = love.graphics.newImage("gfx/body-left-up.png")
   gfx.leftdown = love.graphics.newImage("gfx/body-up-right.png") -- fixme
   
-  gfx.headup = love.graphics.newImage("gfx/head-up.png")
-  gfx.headright = love.graphics.newImage("gfx/head-right.png")
-  gfx.headdown = love.graphics.newImage("gfx/head-down.png")
-  gfx.headleft = love.graphics.newImage("gfx/head-left.png")
+  gfx.headupA = love.graphics.newImage("gfx/head-up-a.png")
+  gfx.headupB = love.graphics.newImage("gfx/head-up-b.png")
+  gfx.headrightA = love.graphics.newImage("gfx/head-right-a.png")
+  gfx.headrightB = love.graphics.newImage("gfx/head-right-b.png")
+  gfx.headdownA = love.graphics.newImage("gfx/head-down-a.png")
+  gfx.headdownB = love.graphics.newImage("gfx/head-down-b.png")
+  gfx.headleftA = love.graphics.newImage("gfx/head-left-a.png")
+  gfx.headleftB = love.graphics.newImage("gfx/head-left-b.png")
 
 end
 
@@ -87,21 +91,41 @@ function gfx:getBodyImage(lastMovement, nextMovement)
   return gfx.error
 end
 
-function gfx:getHeadImage(lastMoveX, lastMoveY)
-  if (lastMoveX > 0) then
-    return gfx.headright
-  end
-  if (lastMoveX < 0) then
-    return gfx.headleft
-  end
-  if (lastMoveY > 0) then
-    return gfx.headdown
-  end
-  if (lastMoveY < 0) then
-    return gfx.headup
+function gfx:getHeadImage(lastMoveX, lastMoveY, tongueFlip)
+  if (tongueFlip) then
+    if (lastMoveX > 0) then
+      return gfx.headrightA
+    end
+    if (lastMoveX < 0) then
+      return gfx.headleftA
+    end
+    if (lastMoveY > 0) then
+      return gfx.headdownA
+    end
+    if (lastMoveY < 0) then
+      return gfx.headupA
+    end
+  else
+    if (lastMoveX > 0) then
+      return gfx.headrightB
+    end
+    if (lastMoveX < 0) then
+      return gfx.headleftB
+    end
+    if (lastMoveY > 0) then
+      return gfx.headdownB
+    end
+    if (lastMoveY < 0) then
+      return gfx.headupB
+    end  
   end
   
-  return gfx.downright
+  -- fallback for the beginning
+  if (tongueFlip) then
+    return gfx.headleftB
+  else
+    return gfx.headleftA
+  end
 end
 
 function gfx:drawToGridOnBothScreens(img, x, y)

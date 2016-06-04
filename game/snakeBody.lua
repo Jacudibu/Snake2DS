@@ -16,10 +16,12 @@ function body:tick(lastMovement, currentPosition, nextMovement)
   if (not (body.skipNext)) then
     body:removeOldest()
   end
+  
   body.skipNext = false
   
-  body:spawnFragment(lastMovement, currentPosition, nextMovement)
-  
+  if (body.length > 0) then
+    body:spawnFragment(lastMovement, currentPosition, nextMovement)
+  end
   body.ticks = body.ticks + 1
 end
 

@@ -26,23 +26,28 @@ function pickup:spawn()
   pickup.x = math.floor(random:range(0, 15))
   pickup.y = math.floor(random:range(0, 30))
   
+  local timesTried = 0
   while (not (pickup:isFieldEmpty(pickup.x, pickup.y))) do
-    pickup.x = math.floor(random:range(0, 15))
-    pickup.y = math.floor(random:range(0, 30))
+    pickup.x = (pickup.x + 1) % 15
+    
+    if (timesTried % 30 == 0) then
+      pickup.y = (pickup.y + 1) %  30
+    end
+    
+    timesTried = timesTried + 1
   end
   
-  print (pickup.x, pickup.y)
   
 end
 
 function pickup:isFieldEmpty(x, y)
   for i, fragment in ipairs(body.fragments) do
-    if (fragment.x == pickup.x or fragment.y == pickup.y) then
+    if (fragment.x == x and fragment.y == y) then
       return false
     end
   end
   
-  if (head.x == pickup.x or head.y == pickup.y) then
+  if (head.x == x and head.y == y) then
     return false
   end
   

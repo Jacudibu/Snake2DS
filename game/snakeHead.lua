@@ -13,6 +13,8 @@ function head:init()
   head.lastMoveY = -2
   head.moveTimer = 0.1 
   head.currentTimer = 1.0
+  head.tongueFlip = false
+  
   head.dead = false
 end
 
@@ -37,33 +39,38 @@ function head:update(dt)
   end
   
   if (head.currentTimer < 0) then
-    body:tick({x = head.lastMoveX, y = head.lastMoveY},
-              {x = head.x, y = head.y},
-              {x = head.moveNextX, y = head.moveNextY})
-    
-    head.x = head.x + head.moveNextX
-    head.y = head.y + head.moveNextY
-    head.x = head.x % 20
-    head.y = head.y % 30
-    head.currentTimer = head.moveTimer
-    
-    head.lastMoveX = head.moveNextX
-    head.lastMoveY = head.moveNextY
-    
-    head:checkForCollsisions()
+    head:tick()
   end
 end
 
 function head:draw()
-  local img = gfx:getHeadImage(head.lastMoveX, head.lastMoveY)
+  local img = gfx:getHeadImage(head.lastMoveX, head.lastMoveY, head.tongueFlip)
   gfx:drawToGridOnBothScreens(img, head.x, head.y)
+end
+
+function head:tick()
+  body:tick({x = head.lastMoveX, y = head.lastMoveY},
+            {x = head.x, y = head.y},
+            {x = head.moveNextX, y = head.moveNextY})
+    
+  head.x = head.x + head.moveNextX
+  head.y = head.y + head.moveNextY
+  head.x = head.x % 20
+  head.y = head.y % 30
+  head.tongueFlip = not (head.tongueFlip)
+  head.currentTimer = head.moveTimer
+    
+  head.lastMoveX = head.moveNextX
+  head.lastMoveY = head.moveNextY
+   
+  head:checkForCollisions()
 end
 
 function head:eat()
   body:increaseSize()
 end
 
-function head:checkForCollsisions()
+function head:checkForCollisions()
   for i, fragment in ipairs(body.fragments) do
     if (head.x == fragment.x and head.y == fragment.y) then
       head.dead = true

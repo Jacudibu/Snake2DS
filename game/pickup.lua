@@ -1,5 +1,6 @@
-require('random')
-require('gfx')
+require('utility/random')
+require('utility/gfx')
+require('spriteDB')
 require('snakeHead')
 require('snakeBody')
 require('stats')
@@ -20,10 +21,10 @@ function pickup:init()
 end
 
 function pickup:draw()
-  gfx:drawToGridOnBothScreens(gfx.pickup, pickup.x, pickup.y)
+  gfx:drawToGridOnBothScreens(spriteDB.pickup, pickup.x, pickup.y)
   
   if (pickup.special.timer > 0) then
-    gfx:drawToGridOnBothScreens(gfx.special, pickup.special.x, pickup.special.y)
+    gfx:drawToGridOnBothScreens(spriteDB.special, pickup.special.x, pickup.special.y)
   end
   
 end

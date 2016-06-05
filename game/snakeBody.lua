@@ -34,7 +34,7 @@ function body:spawnFragment(lastPositionDelta, currentPosition, nextPositionDelt
   fragment.x = currentPosition.x
   fragment.y = currentPosition.y
   
-  local img = gfx:getBodyImage(lastPositionDelta, nextPositionDelta)
+  local img = spriteDB:getBodyImage(lastPositionDelta, nextPositionDelta)
   fragment.img = img
   fragment.age = body.ticks
   

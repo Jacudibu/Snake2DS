@@ -1,4 +1,6 @@
-require('gfx')
+require('utility/gfx')
+require('spriteDB')
+
 require('snakeBody')
 
 head = {}
@@ -37,7 +39,7 @@ function head:update(dt)
 end
 
 function head:draw()
-  local img = gfx:getHeadImage(head.lastMoveX, head.lastMoveY, head.tongueFlip)
+  local img = spriteDB:getHeadImage(head.lastMoveX, head.lastMoveY, head.tongueFlip)
   gfx:drawToGridOnBothScreens(img, head.x, head.y)
 end
 

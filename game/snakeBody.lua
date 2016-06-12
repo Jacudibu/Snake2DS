@@ -5,6 +5,11 @@ function body:init()
   body.length = 0
   body.ticks = 0
   body.skipNext = false
+  
+  body.tail = {}
+  body.tail.x = head.x
+  body.tail.y = head.y
+  body.tail.img = spriteDB.tailup
 end
 
 function body:increaseSize()
@@ -14,6 +19,16 @@ end
 
 function body:handleTick(lastMovement, currentPosition, nextMovement)
   if (not (body.skipNext)) then
+    if body.fragments[1] == nil then
+      body.tail.x = head.x
+      body.tail.y = head.y
+      body.tail.img = spriteDB:getTailImage(nextMovement)
+    else
+      body.tail.x = body.fragments[1].x
+      body.tail.y = body.fragments[1].y
+      body.tail.img = spriteDB:getTailImage(body.fragments[1].direction)
+    end
+
     body:removeOldest()
   end
   
@@ -38,6 +53,8 @@ function body:spawnFragment(lastPositionDelta, currentPosition, nextPositionDelt
   fragment.img = img
   fragment.age = body.ticks
   
+  fragment.direction = nextPositionDelta
+  
   table.insert(body.fragments, fragment)
 end
 
@@ -47,4 +64,6 @@ function body:draw()
       gfx:drawToGridOnBothScreens(fragment.img, fragment.x, fragment.y)
     end
   end
+  
+  gfx:drawToGridOnBothScreens(body.tail.img, body.tail.x, body.tail.y)
 end

@@ -1,3 +1,3 @@
 gameState = "main"
 difficulty = "normal"
-runningOnDS = false
+runningOnDS = true

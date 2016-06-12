@@ -71,4 +71,8 @@ function head:checkForCollisions()
       head.dead = true
     end
   end
+  
+  if (head.x == body.tail.x and head.y == body.tail.y) then
+    head.dead = true  
+  end
 end

@@ -28,6 +28,11 @@ function spriteDB:load()
   spriteDB.headleftA = love.graphics.newImage("sprites/head/head-left-a.png")
   spriteDB.headleftB = love.graphics.newImage("sprites/head/head-left-b.png")
 
+  spriteDB.tailup = love.graphics.newImage("sprites/tail/tail-up.png")
+  spriteDB.tailright = love.graphics.newImage("sprites/tail/tail-right.png")
+  spriteDB.taildown = love.graphics.newImage("sprites/tail/tail-down.png")
+  spriteDB.tailleft = love.graphics.newImage("sprites/tail/tail-left.png")
+
   spriteDB.pickup = love.graphics.newImage("sprites/pickups/pickup-apple.png")
   spriteDB.special = love.graphics.newImage("sprites/pickups/pickup-mouse.png")
 end
@@ -129,3 +134,14 @@ function spriteDB:getHeadImage(lastMoveX, lastMoveY, tongueFlip)
   end
 end
 
+function spriteDB:getTailImage(nextMove)
+  if nextMove.x < 0 then
+    return spriteDB.tailleft
+  elseif nextMove.x > 0 then
+    return spriteDB.tailright
+  elseif nextMove.y < 0 then
+    return spriteDB.tailup
+  elseif nextMove.y > 0 then
+    return spriteDB.taildown
+  end
+end

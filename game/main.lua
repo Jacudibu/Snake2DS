@@ -58,7 +58,6 @@ end
 function tick()
   local x = stats.totalLength
   tickTimerResetValue = 0.15 - (x * x * 0.06) / (4000 + x * x)
-  print(tickTimerResetValue)
   head:tick()
   pickup:tick()
   stats:tick()
@@ -96,7 +95,11 @@ function drawMainMenu()
     love.graphics.setScreen('top')
   end
   love.graphics.print("2DSnake", 170, 40)
-  love.graphics.print("Press DPad to start", 140, 55)
+  if (runningOnDS) then
+    love.graphics.print("Press DPad to start", 140, 55)
+  else
+    love.graphics.print("Press Arrow Keys to start", 120, 55)
+  end
   
   if (runningOnDS) then
     love.graphics.setScreen('bottom')
@@ -126,7 +129,7 @@ function drawGameOver()
     love.graphics.print("GameOver!", 170, 40)
     love.graphics.print("A, B, X or Y to restart!", 140, 55)
   else
-    love.graphics.print("GameOver!", 170, 240)
+    love.graphics.print("GameOver!", 170, 280)
     love.graphics.print("A, B, X or Y to restart!", 140, 295)    
   end
 end

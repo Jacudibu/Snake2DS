@@ -29,12 +29,26 @@ function stats:draw()
   if (runningOnDS) then
     love.graphics.setScreen('top')
   end
-  love.graphics.print(stats.totalScore, 10, 200)
-  love.graphics.print(stats.totalLength, 10, 220)
+  love.graphics.print(stats.totalScore, stats:calculateStatOffset(stats.totalScore), 200)
+  love.graphics.print(stats.totalLength, stats:calculateStatOffset(stats.totalLength), 220)
   
   if (stats.specialTimer > 0) then
     love.graphics.print(stats.specialTimer, 370, 200)
     love.graphics.draw(spriteDB.special, 372, 215)
+  end
+end
+
+function stats:calculateStatOffset(score)
+  if score < 10 then
+    return 13
+  elseif score < 100 then
+    return 10
+  elseif score < 1000 then
+    return 7
+  elseif score < 10000 then
+    return 4
+  else
+    return 1
   end
 end
 

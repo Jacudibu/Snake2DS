@@ -96,14 +96,21 @@ function drawMainMenu()
     love.graphics.setScreen('top')
   end
   love.graphics.print("2DSnake", 170, 40)
-  love.graphics.print("Press DPad to start", 150, 55)
-
+  love.graphics.print("Press DPad to start", 140, 55)
   
   if (runningOnDS) then
     love.graphics.setScreen('bottom')
   end
-  love.graphics.print("Difficulty:", 180, 67)
-  love.graphics.print("[Y]  <  "..difficulty.."  >  [A]", 150, 80)
+  
+  if (runningOnDS) then
+    love.graphics.print("Difficulty:", 160, 67)
+    love.graphics.print("[Y]  <  "..difficulty.."  >  [A]", 130, 80)
+    love.graphics.print("github.com/jacudibu/snake2ds/", 87, 220)
+  else
+    love.graphics.print("Difficulty:", 160, 307)
+    love.graphics.print("[Y]  <  "..difficulty.."  >  [A]", 130, 320)    
+    love.graphics.print("github.com/jacudibu/snake2ds/", 107, 460)
+  end
 end
 
 function drawGameOver()
@@ -116,9 +123,12 @@ function drawGameOver()
   
   if (runningOnDS) then
     love.graphics.setScreen('bottom')
+    love.graphics.print("GameOver!", 170, 40)
+    love.graphics.print("A, B, X or Y to restart!", 140, 55)
+  else
+    love.graphics.print("GameOver!", 170, 240)
+    love.graphics.print("A, B, X or Y to restart!", 140, 295)    
   end
-  love.graphics.print("GameOver!", 170, 40)
-  love.graphics.print("A, B, X or Y to restart!", 140, 55)
 end
 
 function drawScreenBorder()

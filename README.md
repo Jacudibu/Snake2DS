@@ -10,9 +10,9 @@ The game is currently still in development, but the stuff on the master branch s
 - Grow Bigger
 - Eat more Stuff
 - Wrap around screen borders
+- Eat yourself and loose the game.
 
 #TODO
-- Main Menu
 - Highscore
 - GameMode where you can't wrap around borders
 - Different Maps with obstacles

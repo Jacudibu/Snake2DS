@@ -65,5 +65,8 @@ function body:draw()
     end
   end
   
-  gfx:drawToGridOnBothScreens(body.tail.img, body.tail.x, body.tail.y)
+  if (gameState == "game" or gameState == "gameOver") then
+    gfx:drawToGridOnBothScreens(body.tail.img, body.tail.x, body.tail.y)
+  end
+  
 end

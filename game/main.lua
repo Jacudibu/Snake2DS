@@ -57,7 +57,7 @@ end
 
 function tick()
   local x = stats.totalLength
-  tickTimerResetValue = 0.15 - (x * x * 0.06) / (4000 + x * x)
+  tickTimerResetValue = 0.15 - (x * x * 0.06) / (3000 + x * x)
   head:tick()
   pickup:tick()
   stats:tick()
